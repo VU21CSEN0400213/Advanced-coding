@@ -1,0 +1,40 @@
+# Sample data for app recommendations
+apps = [
+    {"name": "Candy Crush", "category": "Games", "rating": 4.5},
+    {"name": "Slack", "category": "Productivity", "rating": 4.7},
+    {"name": "MyFitnessPal", "category": "Health", "rating": 4.6},
+    {"name": "Trello", "category": "Productivity", "rating": 4.5},
+    {"name": "Headspace", "category": "Health", "rating": 4.8},
+]
+
+# Function to recommend apps based on user preferences
+def recommend_apps(category=None, min_rating=0):
+    recommended = []
+    for app in apps:
+        if (category is None or app['category'].lower() == category.lower()) and app['rating'] >= min_rating:
+            recommended.append(app)
+    return recommended
+
+def main():
+    print("Welcome to the App Recommendation ChatBot!")
+    
+    # Get user input for category and minimum rating
+    category = input("Enter the category of apps you're interested in (Games, Productivity, Health) or press Enter to skip: ")
+    min_rating_input = input("Enter the minimum rating you're looking for (0-5) or press Enter for no minimum: ")
+    
+    # Convert minimum rating to float or set to 0 if not provided
+    min_rating = float(min_rating_input) if min_rating_input else 0
+    
+    # Get recommendations
+    recommendations = recommend_apps(category if category else None, min_rating)
+    
+    # Display recommendations
+    if recommendations:
+        print("\nRecommended Apps:")
+        for app in recommendations:
+            print(f"- {app['name']} (Category: {app['category']}, Rating: {app['rating']})")
+    else:
+        print("No apps found matching your criteria.")
+
+if __name__ == "__main__":
+    main()
