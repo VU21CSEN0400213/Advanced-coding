@@ -1,0 +1,64 @@
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def flatten(self, root: TreeNode) -> None:
+       
+        def flatten_tree(node):
+            if not node:
+                return None
+
+            
+            left_tail = flatten_tree(node.left)
+           
+            right_tail = flatten_tree(node.right)
+
+           
+            if node.left:
+             
+                temp_right = node.right
+             
+                node.right = node.left
+                node.left = None  
+
+                current = node.right
+                while current.right:
+                    current = current.right
+
+                
+                current.right = temp_right
+
+            
+            return right_tail if right_tail else left_tail
+
+        flatten_tree(root)
+
+
+def create_node(val):
+    return TreeNode(val)
+
+
+def print_flattened_tree(root):
+    while root:
+        print(root.val, end=" -> " if root.right else "")
+        root = root.right
+    print()
+
+if __name__ == "__main__":
+   
+    root = create_node(1)
+    root.left = create_node(2)
+    root.right = create_node(5)
+    root.left.left = create_node(3)
+    root.left.right = create_node(4)
+    root.right.right = create_node(6)
+
+
+    solution = Solution()
+    solution.flatten(root)
+
+   
+    print_flattened_tree(root)
